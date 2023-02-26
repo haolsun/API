@@ -111,8 +111,8 @@ def main(_run, _config, _log):
     model = nn.DataParallel(model) #multi-gpu
     model.to(device)
 
-    model.load_state_dict(torch.load('./runs/API_LIDC_align_encoder_sets_0_1way_1shot_train/2/snapshots/best_val.pth'))
-
+    model.load_state_dict(torch.load(_config['load_snapshot']))
+    
     _log.info('###### Load data ######')
     # data_name = _config['dataset']
     # Dataset initialization
