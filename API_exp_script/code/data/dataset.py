@@ -5,6 +5,7 @@ from torch.utils.data import DataLoader
 from data.pascal import DatasetPASCAL
 from data.coco import DatasetCOCO
 from data.fss import DatasetFSS
+from data.lidc import DatasetLIDC
 from data.transform import *
 
 
@@ -17,6 +18,7 @@ class FSSDataset:
             'VOC': DatasetPASCAL,
             'COCO': DatasetCOCO,
             'FSS': DatasetFSS,
+            'LIDC':DatasetLIDC,
         }
 
         cls.img_mean = [0.485, 0.456, 0.406]
