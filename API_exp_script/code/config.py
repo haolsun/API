@@ -24,7 +24,7 @@ for source_file in sources_to_save:
 @ex.config
 def cfg():
     """Default configurations"""
-    seed = 123
+    seed = 1234
     gpu_id = [0]
     mode = 'train'
     model = {
@@ -32,25 +32,24 @@ def cfg():
         'encoder': 'ResNet101',
         'decoder': '',
     }
-    dataset = 'COCO'  # 'VOC' or 'COCO' or 'FSS'
-    dataset_path = '../data/'
+    dataset = 'LIDC'  # 'VOC' or 'COCO' or 'FSS' or LIDC
+    dataset_path = '../../data/'
 
     load_snapshot = None
     n_iters = 30
     label_sets = 0
-    batch_size = 12
+    batch_size = 16
     lr_milestones = [50000]
     kl_loss_scaler = 0.01
     ignore_label = 255
 
     n_ways = 1
-    n_shots = 5
+    n_shots =1
     n_queries = 1
 
     lr = 5e-5
     weight_decay = 1e-3
 
-    load_snapshot = ''  #'./runs/API_FSS_align_encoder_sets_0_1way_1shot_train/1/snapshots/best_val.pth'
 
     exp_str = '_'.join(
         [dataset,]
@@ -70,13 +69,13 @@ def cfg():
 def add_observer(config, command_name, logger):
     """A hook fucntion to add observer"""
     exp_name = f'{ex.path}_{config["exp_str"]}'
-    # if config['mode'] == 'test':
-    #     if config['notrain']:
-    #         exp_name += '_notrain'
-    #     if config['scribble']:
-    #         exp_name += '_scribble'
-    #     if config['bbox']:
-    #         exp_name += '_bbox'
+    if config['mode'] == 'test':
+        if config['notrain']:
+            exp_name += '_notrain'
+        if config['scribble']:
+            exp_name += '_scribble'
+        if config['bbox']:
+            exp_name += '_bbox'
     observer = FileStorageObserver.create(os.path.join(config['path']['log_dir'], exp_name))
     ex.observers.append(observer)
     return config
